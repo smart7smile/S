@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMART&SMILE - تكنولوجيا الغد في منزلك اليوم</title>
+    <link rel="icon" href="assets/logo-smart-smile.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.88) 50%, rgba(15, 23, 42, 0.95) 100%),
+                        url('assets/villas14.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .brand-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .brand-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        .brand-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1.5rem;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(96, 165, 250, 0.3), rgba(59, 130, 246, 0.1));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .brand-card:hover::before {
+            opacity: 1;
+        }
+        .glow-blue {
+            box-shadow: 0 0 60px rgba(59, 130, 246, 0.3), 0 0 120px rgba(59, 130, 246, 0.15);
+        }
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .pulse-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.3); }
+        }
+        .slide-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slide-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .service-card:hover {
+            transform: translateY(-12px);
+        }
+        .grid-pattern {
+            background-image:
+                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(59, 130, 246, 0.4);
+            border-radius: 50%;
+            animation: particle-float 15s linear infinite;
+        }
+        @keyframes particle-float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Header / Navigation -->
+    <header id="main-header" class="fixed w-full z-50 transition-all duration-500 bg-white/80 backdrop-blur-xl shadow-lg shadow-blue-900/5">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3 group">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/40 group-hover:shadow-blue-600/60 transition-all duration-300 group-hover:scale-105 overflow-hidden">
+                    <img src="assets/logo-smart-smile.jpg" alt="SMART&SMILE" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <span class="text-2xl font-black tracking-tight text-blue-900">SMART<span class="text-blue-600">&</span>SMILE</span>
+                    <p class="text-[10px] text-blue-500 font-bold -mt-1 tracking-widest">ذكي • متطور • آمن</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex gap-10 text-lg font-bold">
+                <a href="index.html" class="text-blue-600 hover:text-blue-800 transition relative group">
+                    الرئيسية
+                    <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="projects.html" class="text-gray-700 hover:text-blue-600 transition relative group">
+                    أعمالنا السابقة
+                    <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="services_current.html" class="text-gray-700 hover:text-blue-600 transition relative group">
+                    خدماتنا
+                    <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#services" class="text-gray-700 hover:text-blue-600 transition relative group">
+                    أنظمة ذكية
+                    <span class="absolute -bottom-1 right-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+                </a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <a href="tel:0568968186" class="hidden md:flex bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2 rounded-full font-bold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 items-center gap-2">
+                    <i data-lucide="phone" class="w-4 h-4"></i>
+                    تواصل معنا
+                </a>
+                <button id="mobile-menu-toggle" class="md:hidden text-blue-900 p-2 hover:bg-gray-100 rounded-xl transition">
+                    <i data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-nav" class="fixed inset-0 bg-white z-[60] transform translate-x-full transition-transform duration-500 md:hidden">
+            <div class="p-8 flex flex-col h-full">
+                <div class="flex justify-between items-center mb-12">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center overflow-hidden">
+                            <img src="assets/logo-smart-smile.jpg" alt="SMART&SMILE" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-2xl font-black text-blue-900">SMART<span class="text-blue-600">&</span>SMILE</span>
+                    </div>
+                    <button id="close-mobile-menu" class="text-gray-500 p-3 hover:bg-gray-100 rounded-xl transition">
+                        <i data-lucide="x" class="w-8 h-8"></i>
+                    </button>
+                </div>
+                <nav class="flex flex-col gap-6 text-2xl font-bold">
+                    <a href="index.html" class="text-blue-600 border-b-2 border-blue-600 pb-4">الرئيسية</a>
+                    <a href="projects.html" class="text-gray-700 hover:text-blue-600 border-b pb-4 transition">أعمالنا السابقة</a>
+                    <a href="services_current.html" class="text-gray-700 hover:text-blue-600 border-b pb-4 transition">خدماتنا</a>
+                    <a href="#services" class="text-gray-700 hover:text-blue-600 border-b pb-4 transition">أنظمة ذكية</a>
+                    <a href="tel:0568968186" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-5 rounded-2xl text-center flex items-center justify-center gap-3 mt-6 shadow-lg">
+                        <i data-lucide="phone" class="w-6 h-6"></i>
+                        تواصل معنا
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center text-white pt-28 relative overflow-hidden">
+        <!-- Animated Particles -->
+        <div class="hero-particles">
+            <div class="particle" style="left: 10%; animation-delay: 0s; animation-duration: 20s;"></div>
+            <div class="particle" style="left: 20%; animation-delay: 2s; animation-duration: 18s;"></div>
+            <div class="particle" style="left: 30%; animation-delay: 4s; animation-duration: 22s;"></div>
+            <div class="particle" style="left: 40%; animation-delay: 1s; animation-duration: 19s;"></div>
+            <div class="particle" style="left: 50%; animation-delay: 3s; animation-duration: 21s;"></div>
+            <div class="particle" style="left: 60%; animation-delay: 5s; animation-duration: 17s;"></div>
+            <div class="particle" style="left: 70%; animation-delay: 2.5s; animation-duration: 23s;"></div>
+            <div class="particle" style="left: 80%; animation-delay: 1.5s; animation-duration: 20s;"></div>
+            <div class="particle" style="left: 90%; animation-delay: 4.5s; animation-duration: 18s;"></div>
+        </div>
+
+        <!-- Grid Pattern Overlay -->
+        <div class="absolute inset-0 grid-pattern"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-5xl mx-auto text-center">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 bg-blue-600/20 backdrop-blur-sm border border-blue-500/30 px-5 py-2 rounded-full mb-4 float-animation">
+                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                    <span class="text-blue-200 text-sm font-bold">تقنيات منزلك الذكي</span>
+                </div>
+
+                <div class="inline-flex items-center gap-2 bg-emerald-500/15 backdrop-blur-sm border border-emerald-400/25 px-5 py-2 rounded-full mb-3">
+                    <i data-lucide="badge-check" class="w-4 h-4 text-emerald-300"></i>
+                    <span id="free-preview-text-main" class="text-emerald-100 text-sm font-black">المعاينة مجانية</span>
+                    <span id="free-preview-text-sub" class="text-emerald-200/90 text-xs font-bold">احجز موعدك الآن</span>
+                </div>
+
+                <div class="inline-flex items-center gap-2 bg-blue-600/15 backdrop-blur-sm border border-blue-400/25 px-5 py-2 rounded-full mb-8">
+                    <i data-lucide="award" class="w-4 h-4 text-blue-200"></i>
+                    <span id="exp-badge-main" class="text-blue-100 text-sm font-black">4 سنوات خبرة</span>
+                    <span id="exp-badge-sub" class="text-blue-200/90 text-xs font-bold">تشطيب + سمارت</span>
+                </div>
+
+                <h1 id="hero-title" class="text-4xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight tracking-tight">
+                    <span class="gradient-text">SMART&SMILE</span>
+                    <br>
+                    <span class="text-white">تكنولوجيا الغد</span>
+                    <br>
+                    <span class="text-3xl md:text-5xl lg:text-6xl text-blue-300">في منزلك اليوم</span>
+                </h1>
+
+                <p id="hero-slogan" class="text-xl md:text-2xl mb-12 text-blue-100 font-light max-w-2xl mx-auto leading-relaxed">
+                    <span class="text-white font-bold">"Happiness in One Touch"</span>
+                    <br>
+                    السعادة بلمسة واحدة
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#services" class="group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-2xl shadow-blue-600/40 hover:shadow-blue-600/60 hover:-translate-y-1 flex items-center justify-center gap-3">
+                        <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-180 transition-transform duration-500"></i>
+                        اكتشف حلولنا الذكية
+                    </a>
+                    <a href="projects.html" class="glass text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-3 border border-white/20">
+                        <i data-lucide="folder-open" class="w-5 h-5"></i>
+                        شاهد أعمالنا
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-6 mt-16 max-w-3xl mx-auto">
+                    <div class="glass-dark rounded-2xl p-6">
+                        <div class="text-3xl md:text-4xl font-black text-blue-400" id="stat-projects">+15</div>
+                        <div class="text-blue-200 text-sm mt-1">مشروع منجز</div>
+                    </div>
+                    <div class="glass-dark rounded-2xl p-6">
+                        <div class="text-3xl md:text-4xl font-black text-blue-400">4</div>
+                        <div class="text-blue-200 text-sm mt-1">أنظمة متكاملة</div>
+                    </div>
+                    <div class="glass-dark rounded-2xl p-6">
+                        <div class="text-3xl md:text-4xl font-black text-blue-400">24/7</div>
+                        <div class="text-blue-200 text-sm mt-1">دعم فني</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-8 h-8 text-blue-400"></i>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="py-16 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+        <div class="absolute inset-0 grid-pattern opacity-50"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-12 slide-up">
+                <span class="text-blue-600 font-bold text-sm tracking-widest uppercase">الشركاء التقنيون</span>
+                <h2 class="text-3xl md:text-4xl font-black text-gray-900 mt-3">نظامك الذكي يعمل بأحدث التقنيات</h2>
+                <p class="text-gray-500 mt-4 max-w-xl mx-auto">نتعامل مع أقوى المنصات العالمية لضمان أفضل تجربة استخدام</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                <!-- TUYA -->
+                <div class="brand-card relative bg-white rounded-3xl p-8 shadow-xl shadow-gray-200/50 border border-gray-100 cursor-pointer group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <svg viewBox="0 0 24 24" class="w-10 h-10 text-white" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-black text-gray-900 mb-2">TUYA</h3>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">Smart Solution</p>
+                        <div class="mt-4 flex gap-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            <span class="text-xs text-gray-500">معتمد</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMART LIFE -->
+                <div class="brand-card relative bg-white rounded-3xl p-8 shadow-xl shadow-gray-200/50 border border-gray-100 cursor-pointer group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <svg viewBox="0 0 24 24" class="w-10 h-10 text-white" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-black text-gray-900 mb-2">SMART LIFE</h3>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">Global Ecosystem</p>
+                        <div class="mt-4 flex gap-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            <span class="text-xs text-gray-500">معتمد</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TTLOCK -->
+                <div class="brand-card relative bg-white rounded-3xl p-8 shadow-xl shadow-gray-200/50 border border-gray-100 cursor-pointer group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 bg-gradient-to-br from-emerald-600 to-green-700 rounded-2xl flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <svg viewBox="0 0 24 24" class="w-10 h-10 text-white" fill="currentColor">
+                                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-black text-gray-900 mb-2">TTLOCK</h3>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">Security Expert</p>
+                        <div class="mt-4 flex gap-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            <span class="text-xs text-gray-500">معتمد</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ICSEE -->
+                <div class="brand-card relative bg-white rounded-3xl p-8 shadow-xl shadow-gray-200/50 border border-gray-100 cursor-pointer group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 bg-gradient-to-br from-cyan-600 to-blue-700 rounded-2xl flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <svg viewBox="0 0 24 24" class="w-10 h-10 text-white" fill="currentColor">
+                                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-black text-gray-900 mb-2">ICSEE</h3>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">Smart Vision</p>
+                        <div class="mt-4 flex gap-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                            <span class="text-xs text-gray-500">معتمد</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integration Badge -->
+            <div class="mt-12 text-center slide-up">
+                <div class="inline-flex items-center gap-3 bg-gradient-to-r from-blue-50 to-cyan-50 px-6 py-3 rounded-full border border-blue-100">
+                    <i data-lucide="link" class="w-5 h-5 text-blue-600"></i>
+                    <span class="text-gray-700 font-bold">جميع الأنظمة متوافقة مع</span>
+                    <span class="text-blue-600 font-black">Google Home</span>
+                    <span class="text-gray-400">و</span>
+                    <span class="text-blue-600 font-black">Amazon Alexa</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision & Mission -->
+    <section class="py-24 bg-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-cyan-600/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center slide-up">
+                <span class="text-blue-600 font-bold text-sm tracking-widest uppercase">من نحن</span>
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4 mb-8">الرؤية والرسالة</h2>
+
+                <div class="relative">
+                    <div class="absolute -top-6 -right-6 text-8xl text-blue-100 font-black">"</div>
+                    <p id="vision-text" class="text-xl md:text-2xl text-gray-600 leading-loose italic relative z-10">
+                        نحن هنا لنغير مفهوم السكن التقليدي؛ فمنزلك مع <span class="text-blue-600 font-bold not-italic">SMART&SMILE</span> ليس مجرد جدران، بل شريك ذكي يفهم عاداتك، يحمي عائلتك، ويوفر لك الراحة القصوى عبر أحدث التكنولوجيا العالمية.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-6 mt-12">
+                    <div class="flex items-center gap-3 bg-blue-50 px-5 py-3 rounded-full">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-blue-600"></i>
+                        <span class="text-gray-700 font-bold">أمان متقدم</span>
+                    </div>
+                    <div class="flex items-center gap-3 bg-green-50 px-5 py-3 rounded-full">
+                        <i data-lucide="zap" class="w-5 h-5 text-green-600"></i>
+                        <span class="text-gray-700 font-bold">توفير الطاقة</span>
+                    </div>
+                    <div class="flex items-center gap-3 bg-purple-50 px-5 py-3 rounded-full">
+                        <i data-lucide="smartphone" class="w-5 h-5 text-purple-600"></i>
+                        <span class="text-gray-700 font-bold">تحكم ذكي</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-gradient-to-b from-gray-50 to-white relative">
+        <div class="absolute inset-0 grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 slide-up">
+                <span class="text-blue-600 font-bold text-sm tracking-widest uppercase">ما نقدمه</span>
+                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mt-4">الخدمات والحلول الذكية</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto mt-4">نقدم لك مجموعة متكاملة من الأنظمة الذكية التي تجعل حياتك أسهل وأكثر أماناً</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <!-- Lighting -->
+                <div class="service-card bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 group hover:shadow-2xl hover:border-blue-200">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-yellow-500/30">
+                        <i data-lucide="lightbulb" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-black text-gray-900 mb-4">أنظمة الإضاءة والتحكم</h3>
+                    <p class="text-gray-500 leading-relaxed mb-6">استبدال المفاتيح القديمة بمفاتيح لمس زجاجية فاخرة، تحكم صوتي عبر Google Home أو Alexa، والتحكم في الستائر والسخانات.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full font-bold">مفاتيح لمس</span>
+                        <span class="text-xs bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full font-bold">تحكم صوتي</span>
+                    </div>
+                </div>
+
+                <!-- Security -->
+                <div class="service-card bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 group hover:shadow-2xl hover:border-green-200">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-green-500/30">
+                        <i data-lucide="shield-check" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-black text-gray-900 mb-4">الحماية والأمان المتقدم</h3>
+                    <p class="text-gray-500 leading-relaxed mb-6">أنظمة إنذار، حساسات متطورة، كاميرات مراقبة بتتبع ذكي، وأقفال أبواب بالبصمة (WiFi+GSM) لحماية منزلك.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold">بصمة</span>
+                        <span class="text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full font-bold">كاميرات</span>
+                    </div>
+                </div>
+
+                <!-- Energy -->
+                <div class="service-card bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 group hover:shadow-2xl hover:border-amber-200">
+                    <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-amber-500/30">
+                        <i data-lucide="zap" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-black text-gray-900 mb-4">إدارة الطاقة الذكية</h3>
+                    <p class="text-gray-500 leading-relaxed mb-6">مراقبة الاستهلاك لحظة بلحظة، قواطع ذكية (63A) لحماية الأجهزة، وعدادات رقمية دقيقة لقياس الاستهلاك.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-amber-50 text-amber-700 px-3 py-1 rounded-full font-bold">قواطع ذكية</span>
+                        <span class="text-xs bg-amber-50 text-amber-700 px-3 py-1 rounded-full font-bold">مراقبة</span>
+                    </div>
+                </div>
+
+                <!-- Irrigation -->
+                <div class="service-card bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 group hover:shadow-2xl hover:border-cyan-200">
+                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-cyan-500/30">
+                        <i data-lucide="droplets" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-black text-gray-900 mb-4">الري والحدائق الذكية</h3>
+                    <p class="text-gray-500 leading-relaxed mb-6">نظام ري يتكيف تلقائياً مع الطقس، محبس مياه ذكي (Water WiFi Timer)، وجدولة برمجية لتوفير المياه.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-cyan-50 text-cyan-700 px-3 py-1 rounded-full font-bold">WiFi Timer</span>
+                        <span class="text-xs bg-cyan-50 text-cyan-700 px-3 py-1 rounded-full font-bold">توفير</span>
+                    </div>
+                </div>
+
+                <!-- Control Power -->
+                <div class="service-card bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 group hover:shadow-2xl hover:border-indigo-200">
+                    <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-indigo-500/30">
+                        <i data-lucide="settings-2" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-black text-gray-900 mb-4">كنترول باور للمضخات والدينمو</h3>
+                    <p id="control-power-desc" class="text-gray-500 leading-relaxed mb-6">كنترول تحكم في الدينمو وسحب المياه، تشغيل/إيقاف ذكي، وحماية وتنبيهات حسب الحمل وحالة التشغيل.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-bold">دينمو</span>
+                        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-bold">سحب مياه</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="about" class="py-24 bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 text-white overflow-hidden relative">
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 left-0 w-1/2 h-1/2 bg-blue-600/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-1/2 h-1/2 bg-cyan-600/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="slide-up">
+                    <span class="text-blue-400 font-bold text-sm tracking-widest uppercase">لماذا نحن؟</span>
+                    <h2 class="text-4xl md:text-5xl font-black mt-4 mb-8">لماذا تختار SMART&SMILE؟</h2>
+
+                    <div class="space-y-8">
+                        <div class="flex gap-5 group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-amber-500/30">
+                                <i data-lucide="gift" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black mb-2">المعاينة مجانية</h4>
+                                <p class="text-blue-100 leading-relaxed">نزور الموقع ونحدد الاحتياجات ونقدم تصورًا مبدئيًا للحلول الذكية قبل بدء التنفيذ.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-5 group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/30">
+                                <i data-lucide="layers" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black mb-2">حلول متكاملة من الألف للياء</h4>
+                                <p class="text-blue-100 leading-relaxed">تبدأ من مرحلة التأسيس الكهربائي وحتى البرمجة النهائية، نرافقك في كل خطوة لضمان تجربة سلسة.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-5 group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-emerald-500/30">
+                                <i data-lucide="globe" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black mb-2">التوافق العالمي</h4>
+                                <p class="text-blue-100 leading-relaxed">منتجاتنا مختارة بعناية لتدعم أشهر المنصات العالمية مثل Tuya و Alexa و Google Home.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-5 group">
+                            <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-purple-500/30">
+                                <i data-lucide="headphones" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black mb-2">دعم فني مستمر</h4>
+                                <p class="text-blue-100 leading-relaxed">التزام تام بجودة التركيب والتشغيل مع توفير دعم فني مستمر وضمان حقيقي على جميع أعمالنا.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative slide-up">
+                    <div class="relative z-10">
+                        <img id="about-image" src="assets/villas14.jpg" alt="Smart Home" class="rounded-3xl shadow-2xl">
+                    </div>
+                    <div class="absolute -top-8 -right-8 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-8 -left-8 w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl"></div>
+
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-6 -left-6 bg-white text-gray-900 p-6 rounded-2xl shadow-2xl z-20 float-animation">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center text-white">
+                                <i data-lucide="award" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <div id="exp-years" class="text-2xl font-black text-blue-600">4</div>
+                                <div class="text-sm text-gray-500 font-bold">سنوات خبرة</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-cyan-600/5"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center slide-up">
+            <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl flex items-center justify-center text-white mx-auto mb-8 shadow-2xl shadow-blue-600/30 pulse-glow">
+                <i data-lucide="rocket" class="w-10 h-10"></i>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6">هل تريد تحويل منزلك إلى منزل ذكي؟</h2>
+            <p id="cta-text" class="text-gray-500 text-xl max-w-2xl mx-auto mb-10">تواصل معنا الآن واحصل على معاينة مجانية للموقع من فريقنا</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://wa.me/966568968186?text=مرحباً، أرغب في الاستفسار عن خدمات المنزل الذكي" target="_blank" class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:from-green-700 hover:to-emerald-700 transition-all shadow-2xl shadow-green-600/30 hover:shadow-green-600/50 hover:-translate-y-1">
+                    <i data-lucide="message-circle" class="w-6 h-6"></i>
+                    تواصل عبر واتساب
+                </a>
+                <a href="tel:0568968186" class="inline-flex items-center justify-center gap-3 bg-gray-100 text-gray-800 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-gray-200 transition-all border border-gray-200">
+                    <i data-lucide="phone" class="w-6 h-6"></i>
+                    0568968186
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Footer -->
+    <footer id="contact" class="bg-gray-900 text-white pt-20 pb-10 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600"></div>
+
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center overflow-hidden">
+                            <img src="assets/logo-smart-smile.jpg" alt="SMART&SMILE" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <span class="text-2xl font-black">SMART<span class="text-blue-500">&</span>SMILE</span>
+                            <p class="text-[10px] text-blue-400 -mt-1 tracking-widest">ذكي • متطور • آمن</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed">
+                        نحن شركاؤك في بناء منزل المستقبل. تكنولوجيا متطورة، راحة قصوى، وأمان لا مثيل له.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-black mb-6">روابط سريعة</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#home" class="hover:text-white transition flex items-center gap-2"><i data-lucide="chevron-left" class="w-4 h-4"></i> الرئيسية</a></li>
+                        <li><a href="projects.html" class="hover:text-white transition flex items-center gap-2"><i data-lucide="chevron-left" class="w-4 h-4"></i> أعمالنا السابقة</a></li>
+                        <li><a href="services_current.html" class="hover:text-white transition flex items-center gap-2"><i data-lucide="chevron-left" class="w-4 h-4"></i> خدماتنا</a></li>
+                        <li><a href="#services" class="hover:text-white transition flex items-center gap-2"><i data-lucide="chevron-left" class="w-4 h-4"></i> أنظمة ذكية</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xl font-black mb-6">تواصل معنا</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="phone" class="w-5 h-5 text-blue-500"></i>
+                            </div>
+                            <a href="tel:0568968186" class="hover:text-white transition font-bold">0568968186</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="message-circle" class="w-5 h-5 text-green-500"></i>
+                            </div>
+                            <a href="https://wa.me/966568968186" target="_blank" class="hover:text-white transition font-bold">واتساب</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-cyan-600/20 rounded-lg flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-cyan-500"></i>
+                            </div>
+                            <span>المملكة العربية السعودية</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-gray-500 text-sm">© 2024 SMART&SMILE. جميع الحقوق محفوظة.</p>
+                    <div class="flex items-center gap-4">
+                        <a href="admin.html" class="text-gray-500 hover:text-blue-400 transition text-sm font-bold flex items-center gap-2">
+                            <i data-lucide="settings" class="w-4 h-4"></i>
+                            لوحة التحكم
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Customer Service Chat Widget -->
+    <div id="chat-widget" class="fixed bottom-6 left-6 z-[100] flex flex-col items-start">
+        <!-- Chat Window -->
+        <div id="chat-window" class="hidden w-80 md:w-96 bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col mb-4 transition-all duration-500 transform scale-95 opacity-0 origin-bottom-left border border-gray-200">
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-5 text-white flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                            <i data-lucide="headset" class="w-6 h-6"></i>
+                        </div>
+                        <div class="absolute bottom-0 right-0 w-4 h-4 bg-green-400 border-2 border-blue-600 rounded-full animate-pulse"></div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg">خدمة عملاء SMART&SMILE</h4>
+                        <p class="text-xs text-blue-100 flex items-center gap-1">
+                            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                            متصل الآن
+                        </p>
+                    </div>
+                </div>
+                <button id="close-chat" class="hover:bg-blue-500 p-2 rounded-xl transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chat-messages" class="h-72 overflow-y-auto p-5 bg-gray-50 flex flex-col gap-4">
+                <!-- Welcome Message -->
+                <div class="bg-white p-4 rounded-3xl rounded-tr-none shadow-sm max-w-[85%] self-start border border-gray-100">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-blue-600"></i>
+                        </div>
+                        <span class="text-xs text-blue-600 font-bold">SMART&SMILE</span>
+                    </div>
+                    <p class="text-sm text-gray-800">أهلاً بك في SMART&SMILE!</p>
+                    <p class="text-sm text-gray-800 mt-2">أنا مساعدك الذكي، كيف يمكنني مساعدتك اليوم؟</p>
+                    <span class="text-[10px] text-gray-400 mt-2 block">الآن</span>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white p-3 rounded-2xl shadow-sm max-w-[85%] self-start border border-gray-100">
+                    <p class="text-xs text-gray-500 mb-3 font-bold">ردود سريعة:</p>
+                    <div class="flex flex-col gap-2">
+                        <button onclick="sendQuickMessage('أريد معرفة أسعار أنظمة المنزل الذكي')" class="text-right text-sm bg-gray-50 hover:bg-blue-50 text-gray-700 p-2 rounded-xl transition">
+                            💰 أريد معرفة الأسعار
+                        </button>
+                        <button onclick="sendQuickMessage('أريد استشارة مجانية للمنزل الذكي')" class="text-right text-sm bg-gray-50 hover:bg-blue-50 text-gray-700 p-2 rounded-xl transition">
+                            📋 استشارة مجانية
+                        </button>
+                        <button onclick="sendQuickMessage('أريد معرفة المزيد عن خدماتكم')" class="text-right text-sm bg-gray-50 hover:bg-blue-50 text-gray-700 p-2 rounded-xl transition">
+                            ℹ️ المزيد عن الخدمات
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="p-4 bg-white border-t border-gray-100">
+                <div class="flex gap-2">
+                    <input type="text" id="chat-input" placeholder="اكتب استفسارك هنا..." class="flex-1 bg-gray-100 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none">
+                    <button id="send-chat" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-3 rounded-xl hover:from-blue-700 hover:to-blue-800 transition shadow-lg">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <p class="text-[10px] text-gray-400 text-center mt-3">سيتم الرد عليك عبر الواتساب مباشرة</p>
+            </div>
+        </div>
+
+        <!-- Chat Button -->
+        <button id="chat-toggle" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-full shadow-2xl hover:shadow-blue-600/50 hover:scale-110 transition-all duration-300 group flex items-center gap-3 pulse-glow">
+            <i data-lucide="message-circle" class="w-7 h-7"></i>
+            <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 font-bold">تحدث معنا</span>
+        </button>
+    </div>
+
+    <script>
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide-up').forEach(el => observer.observe(el));
+
+        const defaultHomeContent = {
+            heroTitle: "",
+            heroSlogan: "",
+            vision: "",
+            freePreviewMain: "",
+            freePreviewSub: "",
+            expYears: "",
+            expBadgeMain: "",
+            expBadgeSub: "",
+            ctaText: "",
+            controlPowerDesc: "",
+            logoImage: "",
+            heroBackgroundImage: "",
+            aboutImage: ""
+        };
+
+        // Load Dynamic Home Content
+        function loadHomeContent() {
+            const homeData = JSON.parse(localStorage.getItem('smart_smile_home_content')) || defaultHomeContent;
+            if (homeData) {
+                if (homeData.heroTitle) document.getElementById('hero-title').innerHTML = homeData.heroTitle.replace(/SMART\\s*&\\s*SMILE|SMART\\s+SMILE/g, '<span class="gradient-text">SMART&SMILE</span>');
+                if (homeData.heroSlogan) document.getElementById('hero-slogan').innerHTML = homeData.heroSlogan;
+                if (homeData.vision) document.getElementById('vision-text').innerHTML = homeData.vision;
+
+                if (homeData.freePreviewMain && document.getElementById('free-preview-text-main')) document.getElementById('free-preview-text-main').textContent = homeData.freePreviewMain;
+                if (homeData.freePreviewSub && document.getElementById('free-preview-text-sub')) document.getElementById('free-preview-text-sub').textContent = homeData.freePreviewSub;
+                if (homeData.expBadgeMain && document.getElementById('exp-badge-main')) document.getElementById('exp-badge-main').textContent = homeData.expBadgeMain;
+                if (homeData.expBadgeSub && document.getElementById('exp-badge-sub')) document.getElementById('exp-badge-sub').textContent = homeData.expBadgeSub;
+                if (homeData.expYears && document.getElementById('exp-years')) document.getElementById('exp-years').textContent = String(homeData.expYears);
+                if (homeData.ctaText && document.getElementById('cta-text')) document.getElementById('cta-text').textContent = homeData.ctaText;
+                if (homeData.controlPowerDesc && document.getElementById('control-power-desc')) document.getElementById('control-power-desc').textContent = homeData.controlPowerDesc;
+
+                if (homeData.aboutImage && document.getElementById('about-image')) document.getElementById('about-image').src = homeData.aboutImage;
+
+                if (homeData.logoImage) {
+                    document.querySelectorAll('img[src="assets/logo-smart-smile.jpg"]').forEach(img => { img.src = homeData.logoImage; });
+                    const favicon = document.querySelector('link[rel="icon"]');
+                    if (favicon) favicon.href = homeData.logoImage;
+                }
+
+                if (homeData.heroBackgroundImage) {
+                    const heroSection = document.getElementById('home');
+                    if (heroSection) {
+                        heroSection.style.backgroundImage = `linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.88) 50%, rgba(15, 23, 42, 0.95) 100%), url('${homeData.heroBackgroundImage}')`;
+                    }
+                }
+            }
+        }
+
+        // Mobile Menu Logic
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        function toggleMobileMenu() {
+            mobileNav.classList.toggle('translate-x-full');
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        closeMobileMenu.addEventListener('click', toggleMobileMenu);
+
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.add('translate-x-full');
+            });
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 100) {
+                header.classList.add('py-2', 'bg-white/95');
+                header.classList.remove('py-4', 'bg-white/80');
+            } else {
+                header.classList.add('py-4', 'bg-white/80');
+                header.classList.remove('py-2', 'bg-white/95');
+            }
+        });
+
+        // Initialize
+        loadHomeContent();
+        lucide.createIcons();
+
+        // Chat Widget Logic
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChat = document.getElementById('close-chat');
+        const chatInput = document.getElementById('chat-input');
+        const sendChat = document.getElementById('send-chat');
+        const chatMessages = document.getElementById('chat-messages');
+
+        function toggleChat() {
+            const isHidden = chatWindow.classList.contains('hidden');
+            if (isHidden) {
+                chatWindow.classList.remove('hidden');
+                setTimeout(() => {
+                    chatWindow.classList.remove('scale-95', 'opacity-0');
+                    chatWindow.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                chatWindow.classList.remove('scale-100', 'opacity-100');
+                chatWindow.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    chatWindow.classList.add('hidden');
+                }, 500);
+            }
+        }
+
+        chatToggle.addEventListener('click', toggleChat);
+        closeChat.addEventListener('click', toggleChat);
+
+        function sendQuickMessage(message) {
+            const userMsgDiv = document.createElement('div');
+            userMsgDiv.className = 'bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-3xl rounded-tr-none shadow-sm max-w-[85%] self-end';
+            userMsgDiv.innerHTML = `<p class="text-sm">${message}</p><span class="text-[10px] text-blue-200 mt-1 block">الآن</span>`;
+            chatMessages.appendChild(userMsgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                const phoneNumber = '966568968186';
+                const encodedMessage = encodeURIComponent(message);
+                window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+            }, 800);
+        }
+
+        function handleSendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                const userMsgDiv = document.createElement('div');
+                userMsgDiv.className = 'bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-3xl rounded-tr-none shadow-sm max-w-[85%] self-end';
+                userMsgDiv.innerHTML = `<p class="text-sm">${message}</p><span class="text-[10px] text-blue-200 mt-1 block">الآن</span>`;
+                chatMessages.appendChild(userMsgDiv);
+                chatInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                setTimeout(() => {
+                    const phoneNumber = '966568968186';
+                    const encodedMessage = encodeURIComponent(`استفسار من الموقع: ${message}`);
+                    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+                }, 800);
+            }
+        }
+
+        sendChat.addEventListener('click', handleSendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSendMessage();
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

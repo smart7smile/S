@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم الشاملة - SMART&SMILE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Tajawal', sans-serif; }
+        .drag-over { border-color: #2563eb; background-color: #eff6ff; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen pb-20">
+
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="fixed inset-0 bg-blue-900 z-[200] flex items-center justify-center p-6">
+        <div class="bg-white rounded-[2.5rem] max-w-md w-full p-10 shadow-2xl text-center">
+            <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i data-lucide="lock" class="w-10 h-10 text-blue-600"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">دخول الإدارة</h2>
+            <p class="text-gray-500 mb-4">رقم التواصل: 0568968186</p>
+            
+            <form id="login-form" class="space-y-4">
+                <input type="password" id="admin-password" placeholder="كلمة المرور" class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none text-center text-lg font-bold tracking-widest transition">
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition">
+                    دخول
+                </button>
+            </form>
+            <p id="login-error" class="text-red-500 text-xs mt-4 hidden">كلمة المرور غير صحيحة، حاول مرة أخرى.</p>
+            <a href="index.html" class="inline-block mt-8 text-gray-400 hover:text-gray-600 text-sm transition font-medium underline">العودة للموقع</a>
+        </div>
+    </div>
+
+    <!-- Admin Header -->
+    <header class="bg-blue-900 text-white py-6 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i data-lucide="shield-check" class="w-8 h-8 text-blue-400"></i>
+                <div>
+                    <h1 class="text-2xl font-bold leading-none">لوحة التحكم الكاملة</h1>
+                    <p class="text-xs text-blue-300 mt-1">إدارة المشاريع والصور</p>
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <a href="projects.html" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl transition flex items-center gap-2 text-sm font-bold">
+                    <i data-lucide="eye" class="w-4 h-4"></i>
+                    عرض المعرض
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            
+            <!-- Add/Edit Project Form -->
+            <div class="lg:col-span-4">
+                <div class="bg-white rounded-3xl shadow-xl p-8 sticky top-28 border border-gray-100">
+                    <h2 id="form-title" class="text-xl font-bold mb-6 flex items-center gap-2 text-blue-900">
+                        <i data-lucide="plus-circle" class="text-blue-600"></i>
+                        إضافة مشروع جديد
+                    </h2>
+                    <form id="project-form" class="space-y-5">
+                        <input type="hidden" id="project-id">
+                        
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">نوع البيانات</label>
+                            <select id="data-type" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition">
+                                <option value="projects">أعمالنا السابقة</option>
+                                <option value="services">الخدمات التي نقوم بها</option>
+                                <option value="home">محتوى الصفحة الرئيسية</option>
+                            </select>
+                        </div>
+                        
+                        <div id="standard-fields">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">اسم المشروع / الخدمة</label>
+                                <input type="text" id="title" placeholder="مثلاً: فيلا المهندس أسامة" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition">
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">التصنيف</label>
+                                <input type="text" id="category" placeholder="مثلاً: أعمال مجمع فيلات" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition">
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">وصف المشروع</label>
+                                <textarea id="description" rows="3" placeholder="اكتب تفاصيل المشروع هنا..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition resize-none"></textarea>
+                            </div>
+
+                            <div id="partners-field" class="mt-4 hidden">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">الشركات/التطبيقات المتوافقة</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 cursor-pointer hover:border-blue-300 transition">
+                                        <input type="checkbox" value="TUYA" class="partner-checkbox w-4 h-4 text-blue-600 rounded">
+                                        <span class="font-bold text-gray-800">TUYA</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 cursor-pointer hover:border-blue-300 transition">
+                                        <input type="checkbox" value="SMART_LIFE" class="partner-checkbox w-4 h-4 text-blue-600 rounded">
+                                        <span class="font-bold text-gray-800">SMART LIFE</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 cursor-pointer hover:border-blue-300 transition">
+                                        <input type="checkbox" value="TTLOCK" class="partner-checkbox w-4 h-4 text-blue-600 rounded">
+                                        <span class="font-bold text-gray-800">TTLOCK</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 cursor-pointer hover:border-blue-300 transition">
+                                        <input type="checkbox" value="ICSEE" class="partner-checkbox w-4 h-4 text-blue-600 rounded">
+                                        <span class="font-bold text-gray-800">ICSEE</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">صورة المشروع</label>
+                                <div id="drop-zone" class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center cursor-pointer hover:border-blue-600 hover:bg-blue-50 transition group relative overflow-hidden h-40 flex flex-col justify-center items-center">
+                                    <input type="file" id="image-file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                                    <div id="preview-container" class="hidden absolute inset-0 bg-white">
+                                        <img id="image-preview" src="" class="w-full h-full object-cover">
+                                        <button type="button" id="remove-image" class="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full shadow-lg hover:bg-red-700 transition">
+                                            <i data-lucide="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                    <div id="upload-prompt" class="space-y-2">
+                                        <i data-lucide="image-plus" class="w-10 h-10 text-gray-400 mx-auto group-hover:text-blue-600 transition"></i>
+                                        <p class="text-xs text-gray-500 font-medium">اسحب الصورة هنا أو اضغط للاختيار</p>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="image-data">
+                            </div>
+                        </div>
+
+                        <div id="home-fields" class="hidden space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">العنوان الرئيسي (Hero)</label>
+                                <input type="text" id="home-hero-title" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">الشعار الفرعي (Slogan)</label>
+                                <input type="text" id="home-hero-slogan" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">نص الرؤية والرسالة</label>
+                                <textarea id="home-vision" rows="4" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition resize-none"></textarea>
+                            </div>
+
+                            <div class="grid grid-cols-1 gap-4 pt-2">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">لوجو الموقع (أعلى/أسفل)</label>
+                                    <div id="home-logo-drop" class="border-2 border-dashed border-gray-300 rounded-2xl p-4 text-center cursor-pointer hover:border-blue-600 hover:bg-blue-50 transition group relative overflow-hidden h-28 flex flex-col justify-center items-center">
+                                        <input type="file" id="home-logo-file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                                        <div id="home-logo-preview-container" class="hidden absolute inset-0 bg-white">
+                                            <img id="home-logo-preview" src="" class="w-full h-full object-cover">
+                                            <button type="button" id="home-logo-remove" class="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full shadow-lg hover:bg-red-700 transition">
+                                                <i data-lucide="x" class="w-4 h-4"></i>
+                                            </button>
+                                        </div>
+                                        <div id="home-logo-upload-prompt" class="space-y-1">
+                                            <i data-lucide="image-plus" class="w-8 h-8 text-gray-400 mx-auto group-hover:text-blue-600 transition"></i>
+                                            <p class="text-[11px] text-gray-500 font-bold">اضغط لاختيار اللوجو</p>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="home-logo-data">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">صورة خلفية الهيرو (أعلى الصفحة)</label>
+                                    <div id="home-hero-bg-drop" class="border-2 border-dashed border-gray-300 rounded-2xl p-4 text-center cursor-pointer hover:border-blue-600 hover:bg-blue-50 transition group relative overflow-hidden h-28 flex flex-col justify-center items-center">
+                                        <input type="file" id="home-hero-bg-file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                                        <div id="home-hero-bg-preview-container" class="hidden absolute inset-0 bg-white">
+                                            <img id="home-hero-bg-preview" src="" class="w-full h-full object-cover">
+                                            <button type="button" id="home-hero-bg-remove" class="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full shadow-lg hover:bg-red-700 transition">
+                                                <i data-lucide="x" class="w-4 h-4"></i>
+                                            </button>
+                                        </div>
+                                        <div id="home-hero-bg-upload-prompt" class="space-y-1">
+                                            <i data-lucide="image-plus" class="w-8 h-8 text-gray-400 mx-auto group-hover:text-blue-600 transition"></i>
+                                            <p class="text-[11px] text-gray-500 font-bold">اضغط لاختيار صورة الخلفية</p>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="home-hero-bg-data">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">صورة قسم لماذا نحن؟</label>
+                                    <div id="home-about-drop" class="border-2 border-dashed border-gray-300 rounded-2xl p-4 text-center cursor-pointer hover:border-blue-600 hover:bg-blue-50 transition group relative overflow-hidden h-28 flex flex-col justify-center items-center">
+                                        <input type="file" id="home-about-file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+                                        <div id="home-about-preview-container" class="hidden absolute inset-0 bg-white">
+                                            <img id="home-about-preview" src="" class="w-full h-full object-cover">
+                                            <button type="button" id="home-about-remove" class="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full shadow-lg hover:bg-red-700 transition">
+                                                <i data-lucide="x" class="w-4 h-4"></i>
+                                            </button>
+                                        </div>
+                                        <div id="home-about-upload-prompt" class="space-y-1">
+                                            <i data-lucide="image-plus" class="w-8 h-8 text-gray-400 mx-auto group-hover:text-blue-600 transition"></i>
+                                            <p class="text-[11px] text-gray-500 font-bold">اضغط لاختيار صورة القسم</p>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="home-about-data">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 gap-4 pt-2">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">نص المعاينة المجانية</label>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <input type="text" id="home-free-preview-main" placeholder="مثال: المعاينة مجانية" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition">
+                                        <input type="text" id="home-free-preview-sub" placeholder="مثال: احجز موعدك الآن" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">خبرة الشركة (الشارة والرقم)</label>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                        <input type="number" id="home-exp-years" min="0" placeholder="4" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition">
+                                        <input type="text" id="home-exp-badge-main" placeholder="مثال: 4 سنوات خبرة" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition md:col-span-2">
+                                    </div>
+                                    <input type="text" id="home-exp-badge-sub" placeholder="مثال: تشطيب + سمارت" class="w-full mt-3 px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">نص الدعوة للتواصل (CTA)</label>
+                                    <input type="text" id="home-cta-text" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2">كنترول باور (الوصف)</label>
+                                    <textarea id="home-control-power-desc" rows="3" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-600 outline-none transition resize-none"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-3 pt-2">
+                            <button type="submit" id="submit-btn" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition flex items-center justify-center gap-2">
+                                <i data-lucide="save" class="w-5 h-5"></i>
+                                حفظ المشروع
+                            </button>
+                            <button type="button" id="export-btn-form" class="px-6 bg-gray-100 hover:bg-blue-100 text-blue-700 py-4 rounded-2xl font-bold transition flex items-center justify-center gap-2">
+                                <i data-lucide="code" class="w-5 h-5"></i>
+                                حفظ دائم
+                            </button>
+                            <button type="button" id="cancel-edit" class="hidden px-6 bg-gray-200 text-gray-700 py-4 rounded-2xl font-bold hover:bg-gray-300 transition">
+                                إلغاء
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Projects Management List -->
+            <div class="lg:col-span-8">
+                <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900">إدارة المعرض</h2>
+                            <p class="text-sm text-gray-500 mt-1">لديك <span id="project-count" class="text-blue-600 font-bold">0</span> مشاريع في المعرض</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button id="export-btn" class="bg-gray-100 hover:bg-blue-100 text-blue-700 px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-2">
+                                <i data-lucide="code" class="w-4 h-4"></i>
+                                حفظ دائم (كود)
+                            </button>
+                            <button id="clear-all" class="bg-red-50 hover:bg-red-100 text-red-600 px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-2">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                حذف الكل
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="admin-projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Projects will be listed here -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="empty-state" class="hidden text-center py-20 border-2 border-dashed border-gray-100 rounded-3xl">
+                        <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="folder-plus" class="w-10 h-10 text-gray-300"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-400">لا توجد مشاريع مضافة</h3>
+                        <p class="text-sm text-gray-400">ابدأ بإضافة أول مشروع لك من القائمة الجانبية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Code Export Modal -->
+    <div id="export-modal" class="fixed inset-0 bg-black/80 z-[100] hidden flex items-center justify-center p-6 backdrop-blur-sm">
+        <div class="bg-white rounded-[2rem] max-w-2xl w-full p-10 shadow-2xl transform transition-all">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-blue-900">كود الحفظ الدائم</h3>
+                <button class="close-modal p-2 hover:bg-gray-100 rounded-full transition"><i data-lucide="x"></i></button>
+            </div>
+            <p id="export-hint" class="text-gray-600 mb-6 text-sm leading-relaxed">
+                لجعل التعديلات دائمة للجميع، انسخ الكود أدناه واستبدل <code class="bg-blue-50 text-blue-600 px-2 py-0.5 rounded" id="export-var">defaultProjects</code> في ملف <code class="bg-blue-50 text-blue-600 px-2 py-0.5 rounded" id="export-file">projects.html</code>.
+            </p>
+            <textarea id="export-code" readonly class="w-full h-64 bg-gray-900 text-green-400 p-6 rounded-2xl font-mono text-xs mb-8 shadow-inner resize-none focus:outline-none"></textarea>
+            <div class="flex gap-4">
+                <button id="copy-code" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-100 flex items-center justify-center gap-2">
+                    <i data-lucide="copy" class="w-5 h-5"></i>
+                    نسخ الكود بالكامل
+                </button>
+                <button class="close-modal px-8 py-4 bg-gray-100 text-gray-700 rounded-2xl font-bold hover:bg-gray-200 transition">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Security Logic
+        const CORRECT_PASSWORD = 'Mohamed&Lolo1995'; // Your new secure password
+        const loginOverlay = document.getElementById('login-overlay');
+        const loginForm = document.getElementById('login-form');
+        const adminPassInput = document.getElementById('admin-password');
+        const loginError = document.getElementById('login-error');
+
+        // Check session
+        if (sessionStorage.getItem('is_admin') === 'true') {
+            loginOverlay.classList.add('hidden');
+        }
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (adminPassInput.value === CORRECT_PASSWORD) {
+                sessionStorage.setItem('is_admin', 'true');
+                loginOverlay.classList.add('hidden');
+            } else {
+                loginError.classList.remove('hidden');
+                adminPassInput.value = '';
+                adminPassInput.focus();
+            }
+        });
+
+        // DOM Elements
+        const projectForm = document.getElementById('project-form');
+        const projectsGrid = document.getElementById('admin-projects-grid');
+        const emptyState = document.getElementById('empty-state');
+        const projectCount = document.getElementById('project-count');
+        const dropZone = document.getElementById('drop-zone');
+        const imageFile = document.getElementById('image-file');
+        const imagePreview = document.getElementById('image-preview');
+        const previewContainer = document.getElementById('preview-container');
+        const uploadPrompt = document.getElementById('upload-prompt');
+        const imageDataInput = document.getElementById('image-data');
+        const removeImageBtn = document.getElementById('remove-image');
+        const cancelEditBtn = document.getElementById('cancel-edit');
+        const formTitle = document.getElementById('form-title');
+        const submitBtn = document.getElementById('submit-btn');
+        const exportBtn = document.getElementById('export-btn');
+        const clearAllBtn = document.getElementById('clear-all');
+        const exportModal = document.getElementById('export-modal');
+        const exportCode = document.getElementById('export-code');
+        const copyCode = document.getElementById('copy-code');
+        const closeModalBtns = document.querySelectorAll('.close-modal');
+        const exportHint = document.getElementById('export-hint');
+        const exportVarEl = document.getElementById('export-var');
+        const exportFileEl = document.getElementById('export-file');
+        const exportBtnForm = document.getElementById('export-btn-form');
+        const partnersField = document.getElementById('partners-field');
+        const partnerCheckboxes = Array.from(document.querySelectorAll('.partner-checkbox'));
+        const homeLogoFile = document.getElementById('home-logo-file');
+        const homeLogoData = document.getElementById('home-logo-data');
+        const homeLogoPreview = document.getElementById('home-logo-preview');
+        const homeLogoPreviewContainer = document.getElementById('home-logo-preview-container');
+        const homeLogoUploadPrompt = document.getElementById('home-logo-upload-prompt');
+        const homeLogoRemove = document.getElementById('home-logo-remove');
+        const homeHeroBgFile = document.getElementById('home-hero-bg-file');
+        const homeHeroBgData = document.getElementById('home-hero-bg-data');
+        const homeHeroBgPreview = document.getElementById('home-hero-bg-preview');
+        const homeHeroBgPreviewContainer = document.getElementById('home-hero-bg-preview-container');
+        const homeHeroBgUploadPrompt = document.getElementById('home-hero-bg-upload-prompt');
+        const homeHeroBgRemove = document.getElementById('home-hero-bg-remove');
+        const homeAboutFile = document.getElementById('home-about-file');
+        const homeAboutData = document.getElementById('home-about-data');
+        const homeAboutPreview = document.getElementById('home-about-preview');
+        const homeAboutPreviewContainer = document.getElementById('home-about-preview-container');
+        const homeAboutUploadPrompt = document.getElementById('home-about-upload-prompt');
+        const homeAboutRemove = document.getElementById('home-about-remove');
+
+        // State
+        let isEditing = false;
+        const DEFAULT_PROJECTS = [
+            { id: 1, title: "مشروع مجمع فيلات - 1", category: "تأسيس سمارت", description: "أعمال مجمع فيلات", image: "assets/villas1.jpg" },
+            { id: 2, title: "مشروع مجمع فيلات - 2", category: "أنظمة تحكم", description: "أعمال مجمع فيلات", image: "assets/villas2.jpg" },
+            { id: 3, title: "مشروع مجمع فيلات - 3", category: "لوحات ذكية", description: "أعمال مجمع فيلات", image: "assets/villas3.jpg" },
+            { id: 4, title: "مشروع مجمع فيلات - 4", category: "تجهيزات داخلية", description: "أعمال مجمع فيلات", image: "assets/villas4.jpg" },
+            { id: 5, title: "مشروع مجمع فيلات - 5", category: "مفاتيح لمس", description: "أعمال مجمع فيلات", image: "assets/villas5.jpg" },
+            { id: 6, title: "مشروع مجمع فيلات - 6", category: "واجهات خارجية", description: "أعمال مجمع فيلات", image: "assets/villas6.jpg" },
+            { id: 7, title: "مشروع مجمع فيلات - 7", category: "تأسيسات كهربائية", description: "أعمال مجمع فيلات", image: "assets/villas7.jpg" },
+            { id: 8, title: "مشروع مجمع فيلات - 8", category: "تشطيبات سمارت", description: "أعمال مجمع فيلات", image: "assets/villas8.jpg" },
+            { id: 9, title: "مشروع مجمع فيلات - 9", category: "درج داخلي ذكي", description: "أعمال مجمع فيلات", image: "assets/villas9.jpg" },
+            { id: 10, title: "مشروع مجمع فيلات - 10", category: "غرف تحكم", description: "أعمال مجمع فيلات", image: "assets/villas10.jpg" },
+            { id: 11, title: "مشروع مجمع فيلات - 11", category: "تجهيز إنتركم", description: "أعمال مجمع فيلات", image: "assets/villas13.jpg" },
+            { id: 12, title: "مشروع مجمع فيلات - 12", category: "تأسيس تكييف", description: "أعمال مجمع فيلات", image: "assets/villas11.jpg" },
+            { id: 13, title: "مشروع مجمع فيلات - 13", category: "تأسيسات ذكية", description: "أعمال مجمع فيلات", image: "assets/villas12.jpg" },
+            { id: 14, title: "مشروع مجمع فيلات - 14", category: "أنظمة سمارت", description: "أعمال مجمع فيلات", image: "assets/villas14.jpg" },
+            { id: 15, title: "مشروع مجمع فيلات - 15", category: "تجهيز فيلات", description: "أعمال مجمع فيلات", image: "assets/villas15.jpg" }
+        ];
+
+        // Functions
+        function getActiveType() {
+            return document.getElementById('data-type').value;
+        }
+
+        function getStorageKey() {
+            return getActiveType() === 'projects' ? 'smart_smile_projects' : 'smart_smile_services_current';
+        }
+
+        function isQuotaExceededError(err) {
+            return !!err && (
+                err.name === 'QuotaExceededError' ||
+                err.name === 'NS_ERROR_DOM_QUOTA_REACHED' ||
+                err.code === 22 ||
+                err.code === 1014
+            );
+        }
+
+        function safeSetItem(key, value) {
+            try {
+                localStorage.setItem(key, value);
+                return true;
+            } catch (err) {
+                if (isQuotaExceededError(err)) {
+                    alert('تعذر الحفظ لأن مساحة التخزين امتلأت بسبب حجم الصور/البيانات. استخدم صورة أصغر (أو احذف بعض العناصر) ثم جرّب مرة أخرى.');
+                    return false;
+                }
+                alert('حدث خطأ أثناء الحفظ. أعد المحاولة.');
+                return false;
+            }
+        }
+
+        function normalizePartnersArray(item) {
+            const partners = Array.isArray(item?.partners) ? item.partners : [];
+            const normalized = partners
+                .map(p => String(p || '').trim())
+                .filter(Boolean)
+                .map(p => (p === 'SMART LIFE' ? 'SMART_LIFE' : p));
+            return Array.from(new Set(normalized));
+        }
+
+        function shouldReplaceOldDefaults(items) {
+            if (!Array.isArray(items) || items.length !== 2) return false;
+            const titles = items.map(s => (s?.title || '').trim());
+            return titles.includes("تركيب أنظمة الإضاءة الذكية") && titles.includes("تجهيز أنظمة الأمان");
+        }
+
+        const DEFAULT_SERVICES = [
+            {
+                id: 101,
+                title: "تركيب أنظمة الإضاءة الذكية",
+                category: "أنظمة الإضاءة",
+                description: "تحكم كامل بالإضاءة من الجوال والصوت، مع سيناريوهات (نوم/ضيافة/سينما) وتايمرز ذكية.",
+                image: "assets/project1.jpg",
+                partners: ["TUYA", "SMART_LIFE"]
+            },
+            {
+                id: 102,
+                title: "مفاتيح لمس زجاجية (Smart Switches)",
+                category: "أنظمة الإضاءة",
+                description: "استبدال المفاتيح التقليدية بمفاتيح لمس فاخرة مع تحكم عن بعد ومزامنة مع السيناريوهات.",
+                image: "assets/smart-wifi-switch-tuya.png",
+                partners: ["TUYA", "SMART_LIFE"]
+            },
+            {
+                id: 103,
+                title: "تحكم ذكي بالستائر (Curtain Motor)",
+                category: "الستائر والسيناريوهات",
+                description: "فتح/إغلاق وجدولة تلقائية حسب الوقت أو شدة الإضاءة، وربطها مع سيناريو الصباح والمساء.",
+                image: "assets/smart-curtain-module.jpg",
+                partners: ["TUYA", "SMART_LIFE"]
+            },
+            {
+                id: 104,
+                title: "كاميرات مراقبة ذكية (AI Tracking)",
+                category: "الحماية والأمان",
+                description: "كاميرات بدقة عالية مع تنبيهات حركة وتتبع ذكي وتسجيل سحابي/محلي ومشاهدة عن بعد.",
+                image: "assets/smart-camera-ptz.jpg",
+                partners: ["ICSEE"]
+            },
+            {
+                id: 105,
+                title: "حساسات إنذار وحماية متكاملة",
+                category: "الحماية والأمان",
+                description: "حساس حركة + فتح أبواب/نوافذ + صفارة إنذار وربط مع إشعارات فورية على الجوال.",
+                image: "assets/smart-security-alarm.jpg",
+                partners: ["TUYA", "SMART_LIFE"]
+            },
+            {
+                id: 106,
+                title: "أقفال أبواب ذكية بالبصمة والرمز",
+                category: "الأقفال الذكية",
+                description: "بصمة + رمز + بطاقة + تطبيق، مع سجلات دخول وصلاحيات للضيوف وفتح عن بعد.",
+                image: "assets/smart-lock-ttlock.png",
+                partners: ["TTLOCK"]
+            },
+            {
+                id: 107,
+                title: "إنتركم مرئي (Video Intercom)",
+                category: "الإنتركم",
+                description: "رؤية المتصل والرد من الشاشة أو الجوال، وربط فتح الباب مع القفل الذكي.",
+                image: "assets/smart-intercom.jpg",
+                partners: ["ICSEE", "TTLOCK"]
+            },
+            {
+                id: 108,
+                title: "تحكم ذكي بالتكييف (IR / Thermostat)",
+                category: "التكييف والتحكم المناخي",
+                description: "تشغيل/إيقاف وجدولة درجات الحرارة، وربطها بالحضور لتوفير الطاقة وراحة أعلى.",
+                image: "assets/smart-thermostat.png",
+                partners: ["TUYA", "SMART_LIFE"]
+            },
+            {
+                id: 109,
+                title: "مراقبة استهلاك الكهرباء والعدادات الذكية",
+                category: "إدارة الطاقة",
+                description: "متابعة الاستهلاك لحظة بلحظة، تقارير شهرية، وتنبيهات عند الحمل الزائد لحماية الأجهزة.",
+                image: "assets/villas10.jpg",
+                partners: ["TUYA", "SMART_LIFE"]
+            },
+            {
+                id: 110,
+                title: "حساس تسريب ماء + محبس ذكي",
+                category: "الماء والحماية",
+                description: "تنبيه فوري عند التسريب مع إغلاق تلقائي للمحبس لتفادي الأضرار داخل المنزل.",
+                image: "assets/villas8.jpg",
+                partners: ["TUYA", "SMART_LIFE"]
+            },
+            {
+                id: 111,
+                title: "نظام ري ذكي للحدائق",
+                category: "الري والحدائق",
+                description: "جدولة الري حسب الوقت والطقس، وتحكم عن بعد لتوفير الماء ورفع كفاءة الري.",
+                image: "assets/smart-irrigation.jpg",
+                partners: ["TUYA", "SMART_LIFE"]
+            },
+            {
+                id: 112,
+                title: "بوابة/باب كراج ذكي",
+                category: "التحكم والدخول",
+                description: "فتح وإغلاق الكراج من الجوال مع سجل فتح/إغلاق وإشعار عند الحركة.",
+                image: "assets/smart-garage-opener.jpg",
+                partners: ["TUYA", "SMART_LIFE"]
+            },
+            {
+                id: 115,
+                title: "مراقبة مستوى خزان الماء (حساسات + تحكم)",
+                category: "الماء والحماية",
+                description: "متابعة مستوى الخزان وتنبيهات على الجوال، وربط تشغيل/إيقاف المضخة حسب المستوى لتفادي انقطاع الماء.",
+                image: "assets/smart-water-tank.jpg",
+                partners: ["TUYA", "SMART_LIFE"]
+            },
+            {
+                id: 113,
+                title: "شبكات المنزل الذكي (WiFi / LAN / 5G)",
+                category: "الشبكات والإنترنت",
+                description: "تجهيز شبكة قوية للبيت الذكي لضمان اتصال ثابت للأجهزة والكاميرات والتحكم من أي مكان.",
+                image: "assets/gateway-5g.png",
+                partners: ["TUYA", "SMART_LIFE", "ICSEE"]
+            },
+            {
+                id: 114,
+                title: "مقبس ذكي متعدد المخارج (AC + Type‑C + USB)",
+                category: "المقابس الذكية",
+                description: "تشغيل/إيقاف الأجهزة، جداول زمنية، وحماية أفضل مع منافذ USB/Type‑C لشحن سريع.",
+                image: "assets/smart-outlet-3in1.png",
+                partners: ["TUYA", "SMART_LIFE"]
+            }
+        ];
+
+        function migrateServices(services) {
+            if (!Array.isArray(services)) return [];
+            if (shouldReplaceOldDefaults(services)) return DEFAULT_SERVICES;
+            const imageById = Object.fromEntries(DEFAULT_SERVICES.map(s => [String(s.id), s.image]));
+            return services.map(s => {
+                const id = s?.id;
+                const desired = imageById[String(id)];
+                const img = typeof s?.image === 'string' ? s.image : '';
+                const updatedImage = desired && (!img || img.startsWith('assets/villas') || img.startsWith('assets/project')) ? desired : img;
+                return { ...s, image: updatedImage, partners: normalizePartnersArray(s) };
+            });
+        }
+
+        function getSelectedPartners() {
+            return partnerCheckboxes.filter(c => c.checked).map(c => c.value);
+        }
+
+        function setSelectedPartners(partners) {
+            const set = new Set(normalizePartnersArray({ partners }));
+            partnerCheckboxes.forEach(c => { c.checked = set.has(c.value); });
+        }
+
+        function getProjects() {
+            let projects = JSON.parse(localStorage.getItem(getStorageKey()));
+            if (!projects) {
+                projects = getActiveType() === 'projects' ? DEFAULT_PROJECTS : DEFAULT_SERVICES;
+                safeSetItem(getStorageKey(), JSON.stringify(projects));
+            } else if (getActiveType() === 'services') {
+                const migrated = migrateServices(projects);
+                if (migrated !== projects) {
+                    projects = migrated;
+                    safeSetItem(getStorageKey(), JSON.stringify(projects));
+                }
+            }
+            return projects;
+        }
+
+        function saveProjects(projects) {
+            const ok = safeSetItem(getStorageKey(), JSON.stringify(projects));
+            if (!ok) return false;
+            renderProjects();
+            return true;
+        }
+
+        function renderProjects() {
+            const type = getActiveType();
+            const standardFields = document.getElementById('standard-fields');
+            const homeFields = document.getElementById('home-fields');
+            const projectsListSection = document.querySelector('.lg\\:col-span-8');
+
+            if (type === 'home') {
+                standardFields.classList.add('hidden');
+                homeFields.classList.remove('hidden');
+                projectsListSection.classList.add('hidden');
+                formTitle.innerHTML = `<i data-lucide="home" class="text-blue-600"></i> تعديل الصفحة الرئيسية`;
+                submitBtn.innerHTML = `<i data-lucide="save" class="w-5 h-5"></i> حفظ الصفحة الرئيسية`;
+                
+                // Load home data
+                const homeData = JSON.parse(localStorage.getItem('smart_smile_home_content')) || {
+                    heroTitle: "SMART&SMILE - تكنولوجيا الغد في منزلك اليوم",
+                    heroSlogan: "\"Happiness in One Touch\" (السعادة بلمسة واحدة)",
+                    vision: "نحن هنا لنغير مفهوم السكن التقليدي؛ فمنزلك مع SMART&SMILE ليس مجرد جدران، بل شريك ذكي يفهم عاداتك، يحمي عائلتك، ويوفر لك الراحة القصوى عبر أحدث التكنولوجيا العالمية.",
+                    freePreviewMain: "المعاينة مجانية",
+                    freePreviewSub: "احجز موعدك الآن",
+                    expYears: "4",
+                    expBadgeMain: "4 سنوات خبرة",
+                    expBadgeSub: "تشطيب + سمارت",
+                    ctaText: "تواصل معنا الآن واحصل على معاينة مجانية للموقع من فريقنا",
+                    controlPowerDesc: "كنترول تحكم في الدينمو وسحب المياه، تشغيل/إيقاف ذكي، وحماية وتنبيهات حسب الحمل وحالة التشغيل.",
+                    logoImage: "",
+                    heroBackgroundImage: "",
+                    aboutImage: ""
+                };
+                document.getElementById('home-hero-title').value = homeData.heroTitle;
+                document.getElementById('home-hero-slogan').value = homeData.heroSlogan;
+                document.getElementById('home-vision').value = homeData.vision;
+                document.getElementById('home-free-preview-main').value = homeData.freePreviewMain || '';
+                document.getElementById('home-free-preview-sub').value = homeData.freePreviewSub || '';
+                document.getElementById('home-exp-years').value = homeData.expYears || '';
+                document.getElementById('home-exp-badge-main').value = homeData.expBadgeMain || '';
+                document.getElementById('home-exp-badge-sub').value = homeData.expBadgeSub || '';
+                document.getElementById('home-cta-text').value = homeData.ctaText || '';
+                document.getElementById('home-control-power-desc').value = homeData.controlPowerDesc || '';
+
+                setHomeImageValue(homeLogoData, homeLogoPreview, homeLogoPreviewContainer, homeLogoUploadPrompt, homeData.logoImage || '');
+                setHomeImageValue(homeHeroBgData, homeHeroBgPreview, homeHeroBgPreviewContainer, homeHeroBgUploadPrompt, homeData.heroBackgroundImage || '');
+                setHomeImageValue(homeAboutData, homeAboutPreview, homeAboutPreviewContainer, homeAboutUploadPrompt, homeData.aboutImage || '');
+                lucide.createIcons();
+                return;
+            }
+
+            standardFields.classList.remove('hidden');
+            homeFields.classList.add('hidden');
+            projectsListSection.classList.remove('hidden');
+            partnersField.classList.toggle('hidden', type !== 'services');
+
+            const projects = getProjects();
+            projectCount.textContent = projects.length;
+            
+            if (projects.length === 0) {
+                projectsGrid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            projectsGrid.innerHTML = projects.map(project => {
+                const partners = type === 'services' ? normalizePartnersArray(project) : [];
+                const partnersHtml = partners.length
+                    ? `<div class="flex flex-wrap gap-1 mt-3">${partners.map(p => `<span class="bg-white border border-gray-200 text-[10px] font-bold px-2 py-1 rounded-full">${p === 'SMART_LIFE' ? 'SMART LIFE' : p}</span>`).join('')}</div>`
+                    : '';
+                return `
+                <div class="bg-gray-50 border border-gray-100 rounded-3xl p-5 flex flex-col h-full group hover:shadow-lg transition-all duration-300">
+                    <div class="relative h-48 rounded-2xl overflow-hidden mb-4 shadow-sm">
+                        <img src="${project.image}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                            <button onclick="editProject(${project.id})" class="bg-white text-blue-600 p-3 rounded-xl hover:bg-blue-600 hover:text-white transition transform hover:scale-110">
+                                <i data-lucide="edit-3" class="w-5 h-5"></i>
+                            </button>
+                            <button onclick="deleteProject(${project.id})" class="bg-white text-red-600 p-3 rounded-xl hover:bg-red-600 hover:text-white transition transform hover:scale-110">
+                                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">${project.category}</span>
+                        </div>
+                        <h4 class="font-bold text-gray-900 line-clamp-1">${project.title}</h4>
+                        <p class="text-xs text-gray-500 mt-2 line-clamp-2">${project.description}</p>
+                        ${partnersHtml}
+                    </div>
+                </div>
+            `}).join('');
+            lucide.createIcons();
+        }
+
+        let isImageProcessing = false;
+
+        function setSubmitEnabled(enabled) {
+            submitBtn.disabled = !enabled;
+            submitBtn.classList.toggle('opacity-60', !enabled);
+            submitBtn.classList.toggle('cursor-not-allowed', !enabled);
+        }
+
+        function fileToCompressedDataUrl(file, opts = {}) {
+            const maxWidth = Number(opts.maxWidth || 1200);
+            const maxHeight = Number(opts.maxHeight || 1200);
+            const quality = Math.min(0.92, Math.max(0.6, Number(opts.quality || 0.82)));
+
+            return new Promise((resolve, reject) => {
+                const url = URL.createObjectURL(file);
+                const img = new Image();
+                img.onload = () => {
+                    try {
+                        const ratio = Math.min(maxWidth / img.width, maxHeight / img.height, 1);
+                        const w = Math.max(1, Math.round(img.width * ratio));
+                        const h = Math.max(1, Math.round(img.height * ratio));
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        if (!ctx) throw new Error('Canvas not supported');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        URL.revokeObjectURL(url);
+                        resolve(dataUrl);
+                    } catch (e) {
+                        URL.revokeObjectURL(url);
+                        reject(e);
+                    }
+                };
+                img.onerror = (e) => {
+                    URL.revokeObjectURL(url);
+                    reject(e);
+                };
+                img.src = url;
+            });
+        }
+
+        async function handleImageUpload(file) {
+            if (!file) return;
+
+            isImageProcessing = true;
+            setSubmitEnabled(false);
+
+            const tempUrl = URL.createObjectURL(file);
+            imagePreview.src = tempUrl;
+            previewContainer.classList.remove('hidden');
+            uploadPrompt.classList.add('hidden');
+
+            try {
+                const dataUrl = await fileToCompressedDataUrl(file, { maxWidth: 1400, maxHeight: 1400, quality: 0.82 });
+                imageDataInput.value = dataUrl;
+                imagePreview.src = dataUrl;
+            } catch (err) {
+                imageDataInput.value = '';
+                previewContainer.classList.add('hidden');
+                uploadPrompt.classList.remove('hidden');
+                alert('تعذر قراءة/تجهيز الصورة. جرّب صورة أخرى.');
+            } finally {
+                URL.revokeObjectURL(tempUrl);
+                isImageProcessing = false;
+                setSubmitEnabled(true);
+            }
+        }
+
+        function setHomeImageValue(dataInput, previewImg, previewContainer, uploadPrompt, value) {
+            dataInput.value = value || '';
+            if (value) {
+                previewImg.src = value;
+                previewContainer.classList.remove('hidden');
+                uploadPrompt.classList.add('hidden');
+            } else {
+                previewImg.src = '';
+                previewContainer.classList.add('hidden');
+                uploadPrompt.classList.remove('hidden');
+            }
+        }
+
+        async function handleHomeImageUpload(file, dataInput, previewImg, previewContainer, uploadPrompt, opts) {
+            if (!file) return;
+
+            isImageProcessing = true;
+            setSubmitEnabled(false);
+
+            const tempUrl = URL.createObjectURL(file);
+            previewImg.src = tempUrl;
+            previewContainer.classList.remove('hidden');
+            uploadPrompt.classList.add('hidden');
+
+            try {
+                const dataUrl = await fileToCompressedDataUrl(file, opts);
+                setHomeImageValue(dataInput, previewImg, previewContainer, uploadPrompt, dataUrl);
+            } catch (err) {
+                setHomeImageValue(dataInput, previewImg, previewContainer, uploadPrompt, '');
+                alert('تعذر قراءة/تجهيز الصورة. جرّب صورة أخرى.');
+            } finally {
+                URL.revokeObjectURL(tempUrl);
+                isImageProcessing = false;
+                setSubmitEnabled(true);
+            }
+        }
+
+        function editProject(id) {
+            const projects = getProjects();
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+
+            isEditing = true;
+            document.getElementById('project-id').value = project.id;
+            document.getElementById('title').value = project.title;
+            document.getElementById('category').value = project.category;
+            document.getElementById('description').value = project.description;
+            imageDataInput.value = project.image;
+            imagePreview.src = project.image;
+            setSelectedPartners(project.partners || []);
+            
+            previewContainer.classList.remove('hidden');
+            uploadPrompt.classList.add('hidden');
+            cancelEditBtn.classList.remove('hidden');
+            formTitle.innerHTML = `<i data-lucide="edit-3" class="text-blue-600"></i> تعديل المشروع`;
+            submitBtn.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i> تحديث البيانات`;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            lucide.createIcons();
+        }
+
+        function resetForm() {
+            isEditing = false;
+            projectForm.reset();
+            document.getElementById('project-id').value = '';
+            imageDataInput.value = '';
+            setSelectedPartners([]);
+            previewContainer.classList.add('hidden');
+            uploadPrompt.classList.remove('hidden');
+            cancelEditBtn.classList.add('hidden');
+            formTitle.innerHTML = `<i data-lucide="plus-circle" class="text-blue-600"></i> إضافة مشروع جديد`;
+            submitBtn.innerHTML = `<i data-lucide="save" class="w-5 h-5"></i> حفظ المشروع`;
+            lucide.createIcons();
+        }
+
+        function deleteProject(id) {
+            if (confirm('هل أنت متأكد من حذف هذا المشروع نهائياً من المعرض؟')) {
+                let projects = getProjects();
+                projects = projects.filter(p => p.id !== id);
+                saveProjects(projects);
+            }
+        }
+
+        // Event Listeners
+        projectForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const type = getActiveType();
+
+            if (type === 'home') {
+                const homeData = {
+                    heroTitle: document.getElementById('home-hero-title').value,
+                    heroSlogan: document.getElementById('home-hero-slogan').value,
+                    vision: document.getElementById('home-vision').value,
+                    logoImage: homeLogoData.value,
+                    heroBackgroundImage: homeHeroBgData.value,
+                    aboutImage: homeAboutData.value,
+                    freePreviewMain: document.getElementById('home-free-preview-main').value,
+                    freePreviewSub: document.getElementById('home-free-preview-sub').value,
+                    expYears: document.getElementById('home-exp-years').value,
+                    expBadgeMain: document.getElementById('home-exp-badge-main').value,
+                    expBadgeSub: document.getElementById('home-exp-badge-sub').value,
+                    ctaText: document.getElementById('home-cta-text').value,
+                    controlPowerDesc: document.getElementById('home-control-power-desc').value
+                };
+                const ok = safeSetItem('smart_smile_home_content', JSON.stringify(homeData));
+                if (ok) alert('تم تحديث الصفحة الرئيسية بنجاح!');
+                return;
+            }
+
+            if (isImageProcessing) {
+                alert('جاري تجهيز الصورة… انتظر لحظة ثم اضغط حفظ/تحديث مرة أخرى.');
+                return;
+            }
+
+            const projects = getProjects();
+            const imageData = imageDataInput.value;
+            
+            if (!imageData) {
+                alert('يرجى اختيار صورة للمشروع');
+                return;
+            }
+
+            const projectData = {
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                description: document.getElementById('description').value,
+                image: imageData,
+                partners: getSelectedPartners()
+            };
+
+            if (isEditing) {
+                const id = parseInt(document.getElementById('project-id').value);
+                const index = projects.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    projects[index] = { ...projects[index], ...projectData };
+                }
+            } else {
+                projects.unshift({
+                    id: Date.now(),
+                    ...projectData
+                });
+            }
+
+            const saved = saveProjects(projects);
+            if (!saved) return;
+            resetForm();
+            alert(isEditing ? 'تم تحديث المشروع بنجاح!' : 'تم إضافة المشروع الجديد بنجاح!');
+        });
+
+        homeLogoFile.addEventListener('change', (e) => handleHomeImageUpload(e.target.files[0], homeLogoData, homeLogoPreview, homeLogoPreviewContainer, homeLogoUploadPrompt, { maxWidth: 512, maxHeight: 512, quality: 0.86 }));
+        homeHeroBgFile.addEventListener('change', (e) => handleHomeImageUpload(e.target.files[0], homeHeroBgData, homeHeroBgPreview, homeHeroBgPreviewContainer, homeHeroBgUploadPrompt, { maxWidth: 1600, maxHeight: 1000, quality: 0.78 }));
+        homeAboutFile.addEventListener('change', (e) => handleHomeImageUpload(e.target.files[0], homeAboutData, homeAboutPreview, homeAboutPreviewContainer, homeAboutUploadPrompt, { maxWidth: 1400, maxHeight: 1400, quality: 0.82 }));
+
+        homeLogoRemove.addEventListener('click', () => {
+            homeLogoFile.value = '';
+            setHomeImageValue(homeLogoData, homeLogoPreview, homeLogoPreviewContainer, homeLogoUploadPrompt, '');
+        });
+        homeHeroBgRemove.addEventListener('click', () => {
+            homeHeroBgFile.value = '';
+            setHomeImageValue(homeHeroBgData, homeHeroBgPreview, homeHeroBgPreviewContainer, homeHeroBgUploadPrompt, '');
+        });
+        homeAboutRemove.addEventListener('click', () => {
+            homeAboutFile.value = '';
+            setHomeImageValue(homeAboutData, homeAboutPreview, homeAboutPreviewContainer, homeAboutUploadPrompt, '');
+        });
+
+        imageFile.addEventListener('change', (e) => handleImageUpload(e.target.files[0]));
+        
+        removeImageBtn.addEventListener('click', () => {
+            imageDataInput.value = '';
+            imageFile.value = '';
+            previewContainer.classList.add('hidden');
+            uploadPrompt.classList.remove('hidden');
+        });
+
+        cancelEditBtn.addEventListener('click', resetForm);
+
+        clearAllBtn.addEventListener('click', () => {
+            if (confirm('تحذير: سيتم حذف جميع المشاريع الحالية من المعرض. هل تريد الاستمرار؟')) {
+                saveProjects([]);
+            }
+        });
+
+        exportBtn.addEventListener('click', () => {
+            const type = getActiveType();
+            let codeStr = '';
+            let varName = '';
+            let fileName = '';
+
+            if (type === 'projects') {
+                const items = getProjects();
+                varName = 'defaultProjects';
+                fileName = 'projects.html';
+                codeStr = `const ${varName} = ${JSON.stringify(items, null, 4)};`;
+            } else if (type === 'services') {
+                const items = getProjects();
+                varName = 'defaultServices';
+                fileName = 'services_current.html';
+                codeStr = `const ${varName} = ${JSON.stringify(items, null, 4)};`;
+            } else if (type === 'home') {
+                const homeData = JSON.parse(localStorage.getItem('smart_smile_home_content')) || {};
+                varName = 'defaultHomeContent';
+                fileName = 'index.html';
+                codeStr = `const ${varName} = ${JSON.stringify(homeData, null, 4)};`;
+            }
+
+            exportVarEl.textContent = varName || 'defaultProjects';
+            exportFileEl.textContent = fileName || 'projects.html';
+            exportCode.value = codeStr || '';
+            exportModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+
+        exportBtnForm.addEventListener('click', () => {
+            exportBtn.click();
+        });
+
+        closeModalBtns.forEach(btn => btn.addEventListener('click', () => {
+            exportModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }));
+
+        copyCode.addEventListener('click', () => {
+            exportCode.select();
+            document.execCommand('copy');
+            copyCode.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i> تم النسخ بنجاح!`;
+            setTimeout(() => {
+                copyCode.innerHTML = `<i data-lucide="copy" class="w-5 h-5"></i> نسخ الكود بالكامل`;
+                lucide.createIcons();
+            }, 2000);
+            lucide.createIcons();
+        });
+
+        // Drag and Drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('drag-over'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('drag-over'), false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            handleImageUpload(dt.files[0]);
+        }, false);
+
+        document.getElementById('data-type').addEventListener('change', renderProjects);
+
+        // Initialize
+        renderProjects();
+        lucide.createIcons();
+    </script>
+</body>
+</html>
